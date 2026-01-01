@@ -4,6 +4,23 @@ import { fetchRestaurants } from "../api/restaurant";
 import { useAuth } from "../auth/AuthContext";
 import StatusBar from "../components/StatusBar";
 
+const foodImages = [
+  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
+  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
+  "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80",
+  "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80",
+  "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=80",
+  "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800&q=80",
+  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
+  "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80",
+  "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=800&q=80",
+  "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=800&q=80",
+  "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
+  "https://images.unsplash.com/photo-1563379091339-03246963d4c9?w=800&q=80",
+  "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&q=80",
+  "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&q=80"
+];
+
 export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -143,23 +160,6 @@ export default function Home() {
           }
           
           if (!imageUrl || imageUrl.trim() === "") {
-            const foodImages = [
-              "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
-              "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
-              "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80",
-              "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80",
-              "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=80",
-              "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800&q=80",
-              "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
-              "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80",
-              "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=800&q=80",
-              "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=800&q=80",
-              "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
-              "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
-              "https://images.unsplash.com/photo-1563379091339-03246963d4c9?w=800&q=80",
-              "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&q=80",
-              "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&q=80",
-            ];
             const imageIndex = (item.restaurant_id || item.id || index) % foodImages.length;
             imageUrl = foodImages[imageIndex];
           }
@@ -439,16 +439,6 @@ export default function Home() {
               loading="lazy"
                         onError={(e) => {
                           e.target.onerror = null;
-                          const foodImages = [
-                            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
-                            "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
-                            "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80",
-                            "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&q=80",
-                            "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=80",
-                            "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=800&q=80",
-                            "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
-                            "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80",
-                          ];
                           const randomIndex = Math.floor(Math.random() * foodImages.length);
                           e.target.src = foodImages[randomIndex];
                         }}
