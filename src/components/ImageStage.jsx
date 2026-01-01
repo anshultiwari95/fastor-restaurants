@@ -351,7 +351,12 @@ export default function ImageStage({ image, onCanvasReady }) {
   }, [isDragging]);
 
   return (
-    <div className="w-full relative" style={{ height: "50vh", minHeight: "300px", backgroundColor: "#f3f4f6" }}>
+    <div className="w-full relative" style={{ 
+      height: "50vh", 
+      minHeight: "300px", 
+      maxHeight: "600px",
+      backgroundColor: "#f3f4f6" 
+    }}>
       <canvas 
         ref={canvasEl}
         onMouseDown={handleMouseDown}
@@ -370,6 +375,7 @@ export default function ImageStage({ image, onCanvasReady }) {
           touchAction: "none",
           userSelect: "none"
         }}
+        className="touch-pan-y"
       />
     </div>
   );

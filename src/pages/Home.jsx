@@ -291,49 +291,49 @@ export default function Home() {
       <StatusBar />
 
       {/* Header with Location - Light Grey Bar - Sticky with Bulging Effect */}
-      <div className="sticky top-0 z-50 px-4 pt-3 pb-2">
-        <div className="bg-gray-100 rounded-lg p-5 shadow-lg transition-all duration-300 hover:shadow-xl" style={{
+      <div className="sticky top-0 z-50 px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-2 sm:pb-3">
+        <div className="bg-gray-100 rounded-lg p-4 sm:p-5 lg:p-6 shadow-lg transition-all duration-300 hover:shadow-xl" style={{
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
         }}>
-          <div className="flex items-center gap-2 mb-1">
-            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-2 mb-1 sm:mb-1.5">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
-            <p className="text-xs text-gray-500">Pre Order From</p>
+            <p className="text-xs sm:text-sm text-gray-500">Pre Order From</p>
           </div>
-          <p className="text-base font-bold text-gray-800">
+          <p className="text-base sm:text-lg lg:text-xl font-bold text-gray-800">
             Connaught Place
           </p>
         </div>
       </div>
 
-      <div className="px-4 pt-4 pb-4">
+      <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-4 sm:pb-6">
 
         {/* User Greeting Card with Action Icons */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="flex-1 bg-gray-100 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
-            <h2 className="text-2xl font-bold mb-1 text-[#8391A1] ">Karan</h2>
-            <p className="text-sm text-gray-800 font-bold">Let's explore this evening</p>
+        <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <div className="flex-1 bg-gray-100 rounded-lg p-4 sm:p-5 lg:p-6 shadow-sm hover:shadow-md transition-all duration-300">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2 text-[#8391A1]">Karan</h2>
+            <p className="text-sm sm:text-base lg:text-lg text-gray-800 font-bold">Let's explore this evening</p>
           </div>
-          <div className="flex flex-row gap-2">
-            <button className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex flex-col items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 ease-out">
-              <span className="text-xl font-bold">%</span>
-              <span className="text-xs text-gray-200">Offers</span>
+          <div className="flex flex-row gap-2 sm:gap-3">
+            <button className="w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex flex-col items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 ease-out min-w-[56px] min-h-[56px]">
+              <span className="text-xl sm:text-2xl font-bold">%</span>
+              <span className="text-xs sm:text-sm text-gray-200">Offers</span>
             </button>
-            <button className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex flex-col items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 ease-out">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button className="w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex flex-col items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 ease-out min-w-[56px] min-h-[56px]">
+              <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
               </svg>
-              <span className="text-xs mt-1 text-gray-200">Wallet</span>
+              <span className="text-xs sm:text-sm mt-1 text-gray-200">Wallet</span>
             </button>
           </div>
         </div>
 
         {/* Your Taste Section */}
-        <div className="mb-6 px-4">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-2xl font-bold text-gray-800">Your taste</h3>
-            <button className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200 hover:scale-105 transform">see all &gt;</button>
+        <div className="mb-6 sm:mb-8 px-0 sm:px-4">
+          <div className="flex justify-between items-center mb-3 sm:mb-4">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">Your taste</h3>
+            <button className="text-sm sm:text-base text-gray-500 hover:text-gray-700 transition-colors duration-200 hover:scale-105 transform py-2 px-2 min-h-[44px] min-w-[44px]">see all &gt;</button>
           </div>
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
             {[
@@ -358,9 +358,9 @@ export default function Home() {
         </div>
 
         {/* Promotional Banner - Scrollable Carousel */}
-        <div className="mb-6 relative h-64 overflow-visible">
+        <div className="mb-6 sm:mb-8 relative h-56 sm:h-64 lg:h-72 overflow-visible">
           <div 
-            className="flex overflow-x-auto h-full snap-x snap-mandatory scrollbar-hide px-4"
+            className="flex overflow-x-auto h-full snap-x snap-mandatory scrollbar-hide px-4 sm:px-6"
             style={{ 
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -425,10 +425,10 @@ export default function Home() {
                 />
                 {/* Dark overlay for better text readability */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/20"></div>
-                <div className="absolute inset-0 flex items-center px-6 z-10">
+                <div className="absolute inset-0 flex items-center px-4 sm:px-6 lg:px-8 z-10">
                   <div className="text-white">
-                    <h3 className="text-xl font-bold mb-3 drop-shadow-lg">{banner.title}</h3>
-                    <button className="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95">
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 drop-shadow-lg">{banner.title}</h3>
+                    <button className="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 lg:py-3.5 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 min-h-[44px] sm:min-h-[48px]">
                       {banner.buttonText}
                     </button>
                   </div>
@@ -450,8 +450,8 @@ export default function Home() {
         </div>
 
         {/* Popular Ones Section */}
-        <div className="mb-4 px-4">
-          <h3 className="text-base font-bold mb-4 text-gray-800">Popular Ones</h3>
+        <div className="mb-4 sm:mb-6 px-0 sm:px-4">
+          <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Popular Ones</h3>
           {restaurants.length === 0 && !loading && (
             <div className="text-center py-12 text-gray-500">
               No restaurants found
@@ -465,7 +465,7 @@ export default function Home() {
                 className="bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ease-out shadow-sm group"
               >
                 <div className="flex items-stretch">
-                  <div className="w-24 shrink-0 bg-gray-200 relative rounded-l-lg overflow-hidden self-stretch">
+                  <div className="w-24 sm:w-28 lg:w-32 shrink-0 bg-gray-200 relative rounded-l-lg overflow-hidden self-stretch">
                     {r.image ? (
             <img
               src={r.image}
@@ -498,12 +498,12 @@ export default function Home() {
                       />
                     )}
                   </div>
-                  <div className="flex-1 p-3 flex flex-col justify-center">
-                    <h2 className="font-bold text-base mb-0.5 text-gray-800">{r.name}</h2>
-                    <p className="text-xs text-gray-500 mb-1">
+                  <div className="flex-1 p-3 sm:p-4 lg:p-5 flex flex-col justify-center">
+                    <h2 className="font-bold text-base sm:text-lg lg:text-xl mb-0.5 sm:mb-1 text-gray-800">{r.name}</h2>
+                    <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-1.5">
                       {r.cuisine || "Cakes, Pastry, Pastas"}
                     </p>
-                    <p className="text-xs text-gray-500 mb-1.5">
+                    <p className="text-xs sm:text-sm text-gray-500 mb-1.5 sm:mb-2">
                       {(r.location && r.location !== "null" && r.location.trim() !== "") 
                         ? r.location 
                         : "Connaught Place, New Delhi"}
@@ -535,10 +535,10 @@ export default function Home() {
         </div>
 
         {/* Logout Button */}
-        <div className="mt-6 text-center pb-4 px-4">
+        <div className="mt-6 sm:mt-8 text-center pb-4 sm:pb-6 px-4">
           <button
             onClick={logout}
-            className="text-red-500 text-sm font-medium hover:text-red-600 transition-all duration-200 hover:scale-105 active:scale-95"
+            className="text-red-500 text-sm sm:text-base font-medium hover:text-red-600 transition-all duration-200 hover:scale-105 active:scale-95 py-2 px-4 min-h-[44px] min-w-[44px]"
           >
             Logout
           </button>

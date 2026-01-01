@@ -157,10 +157,28 @@ npm run lint
 
 ## 📱 PWA Features
 
-The application supports Progressive Web App features:
+The application is a fully functional Progressive Web App (PWA):
+- **Installable**: Can be installed on mobile and desktop devices
+- **Offline Support**: Service worker caches assets and API responses
 - **Web Share API**: Share images directly from the browser
-- **Responsive Design**: Works on mobile and desktop
-- **Offline Capability**: Can be installed as a PWA (with service worker setup)
+- **App Icons**: Custom icons for home screen installation
+- **Install Prompt**: Automatic install prompt for supported browsers
+- **Responsive Design**: Works seamlessly on mobile and desktop
+
+### PWA Setup
+
+The PWA is configured using `vite-plugin-pwa`. To generate app icons:
+
+1. Open `public/generate-icons.html` in your browser
+2. Click "Generate Icons" to create all required icon sizes
+3. Download and save the icons to the `public/` folder
+4. Icons will be automatically included in the build
+
+Required icons:
+- `pwa-64x64.png`
+- `pwa-192x192.png`
+- `pwa-512x512.png`
+- `maskable-icon-512x512.png`
 
 ## 🐛 Known Issues & Notes
 

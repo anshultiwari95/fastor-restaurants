@@ -109,16 +109,17 @@ export default function Otp() {
   return (
     <div className="min-h-screen bg-white">
       <StatusBar />
-      <div className="px-4 py-8">
-        <div className="max-w-sm mx-auto">
+      <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+        <div className="max-w-sm sm:max-w-md lg:max-w-lg mx-auto">
 
-        {/* Back Button */}
+        {/* Back Button - 44x44px minimum touch target */}
         <button
           onClick={() => navigate("/login")}
-          className="mb-6 text-gray-600 hover:text-black transition-all duration-200 hover:scale-110 active:scale-95"
+          className="mb-6 sm:mb-8 text-gray-600 hover:text-black transition-all duration-200 hover:scale-110 active:scale-95 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center"
+          aria-label="Go back"
         >
           <svg
-            className="w-6 h-6"
+            className="w-6 h-6 sm:w-7 sm:h-7"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -133,15 +134,15 @@ export default function Otp() {
         </button>
 
         {/* Main Content */}
-        <h1 className="mb-2 font-bold text-[26px] text-[#1E232C] leading-[130%] tracking-[-0.01em]">
+        <h1 className="mb-2 sm:mb-3 font-bold text-2xl sm:text-3xl lg:text-4xl text-[#1E232C] leading-[130%] tracking-[-0.01em]">
           OTP Verification
         </h1>
-        <p className="text-[#8391A1] font-medium text-base mb-8">
+        <p className="text-[#8391A1] font-medium text-sm sm:text-base lg:text-lg mb-6 sm:mb-8 lg:mb-10">
           Enter the verification code we just sent on your Mobile Number.
         </p>
 
-        {/* OTP Input Boxes */}
-        <div className="flex gap-3 mb-6 justify-center">
+        {/* OTP Input Boxes - Responsive sizing with 44x44px minimum */}
+        <div className="flex gap-2 sm:gap-3 lg:gap-4 mb-6 sm:mb-8 justify-center">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -153,28 +154,28 @@ export default function Otp() {
               onChange={(e) => handleOtpChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
               onPaste={index === 0 ? handlePaste : undefined}
-              className="w-14 h-14 border border-gray-300 rounded-lg text-center text-xl font-semibold focus:outline-none focus:border-[#FF6D6A] focus:ring-2 focus:ring-[#FF6D6A]/20 transition-all duration-300 bg-[#f7f8f9] hover:border-gray-400 hover:scale-105 active:scale-95"
+              className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 border border-gray-300 rounded-lg text-center text-lg sm:text-xl lg:text-2xl font-semibold focus:outline-none focus:border-[#FF6D6A] focus:ring-2 focus:ring-[#FF6D6A]/20 transition-all duration-300 bg-[#f7f8f9] hover:border-gray-400 hover:scale-105 active:scale-95 min-w-[48px] min-h-[48px]"
               autoFocus={index === 0}
             />
           ))}
         </div>
 
-        {/* Verify Button */}
+        {/* Verify Button - 44px minimum height */}
         <button
           disabled={!isValidOtp || loading}
           onClick={handleVerify}
-          className="w-full bg-[#FF6D6A] text-white py-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#FF5A57] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ease-out font-medium mb-4"
+          className="w-full bg-[#FF6D6A] text-white py-4 sm:py-5 lg:py-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#FF5A57] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ease-out font-medium mb-4 sm:mb-6 text-base sm:text-lg min-h-[48px] sm:min-h-[52px] lg:min-h-[56px]"
         >
           {loading ? "Verifying..." : "Verify"}
         </button>
 
-        {/* Resend Link */}
-        <p className="text-center text-sm text-[#1E232C]">
+        {/* Resend Link - 44px minimum touch target */}
+        <p className="text-center text-sm sm:text-base text-[#1E232C]">
           Didn't received code?{" "}
           <button
             onClick={handleResend}
             disabled={loading}
-            className="text-blue-600 font-medium hover:underline transition-all duration-200 hover:scale-105 active:scale-95"
+            className="text-blue-600 font-medium hover:underline transition-all duration-200 hover:scale-105 active:scale-95 py-2 px-2 min-h-[44px] inline-flex items-center"
           >
             Resend
           </button>

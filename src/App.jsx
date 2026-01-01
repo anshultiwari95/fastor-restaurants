@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import RestaurantDetail from "./pages/RestaurantDetail";
 import { AuthProvider, useAuth } from "./auth/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import InstallPrompt from "./components/InstallPrompt";
 
 function AppRoutes() {
   const { isAuthenticated } = useAuth();
@@ -45,6 +46,7 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <AppRoutes />
+        <InstallPrompt />
       </BrowserRouter>
     </AuthProvider>
   );

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #FF6D6A; }
+        button {
+            background: #FF6D6A;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover { background: #FF5A57; }
+        .icons { margin-top: 20px; }
+        .icon-preview {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        canvas { border: 1px solid #ddd; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Fastor PWA Icon Generator</h1>
+        <p>Click the button below to generate PWA icons from the Fastor logo.</p>
+        <button onclick="generateIcons()">Generate Icons</button>
+        <div class="icons" id="icons"></div>
+    </div>
+
+    <script>
+        function generateIcons() {
+            const sizes = [64, 192, 512];
+            const container = document.getElementById('icons');
+            container.innerHTML = '<h2>Generated Icons (Right-click to save):</h2>';
+            
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                // Background
+                ctx.fillStyle = '#FF6D6A';
+                ctx.fillRect(0, 0, size, size);
+                
+                // Rounded corners
+                ctx.globalCompositeOperation = 'destination-in';
+                ctx.beginPath();
+                const radius = size * 0.1;
+                ctx.roundRect(0, 0, size, size, radius);
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
+                
+                // Text
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = `bold ${size * 0.3}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('F', size/2, size/2);
+                
+                // Create download link
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `pwa-${size}x${size}.png`;
+                    
+                    const div = document.createElement('div');
+                    div.className = 'icon-preview';
+                    div.innerHTML = `
+                        <canvas width="${size}" height="${size}" style="max-width: 128px; height: auto;"></canvas>
+                        <p>${size}x${size}</p>
+                        <a href="${url}" download="pwa-${size}x${size}.png">Download</a>
+                    `;
+                    const previewCanvas = div.querySelector('canvas');
+                    const previewCtx = previewCanvas.getContext('2d');
+                    previewCtx.drawImage(canvas, 0, 0, size, size, 0, 0, previewCanvas.width, previewCanvas.height);
+                    
+                    container.appendChild(div);
+                });
+            });
+            
+            // Generate maskable icon (with padding)
+            const maskableSize = 512;
+            const canvas = document.createElement('canvas');
+            canvas.width = maskableSize;
+            canvas.height = maskableSize;
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = '#FF6D6A';
+            ctx.fillRect(0, 0, maskableSize, maskableSize);
+            
+            // Safe zone (80% of size for maskable icons)
+            const safeZone = maskableSize * 0.8;
+            const offset = (maskableSize - safeZone) / 2;
+            
+            // Inner content
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `bold ${safeZone * 0.3}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('F', maskableSize/2, maskableSize/2);
+            
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const div = document.createElement('div');
+                div.className = 'icon-preview';
+                div.innerHTML = `
+                    <canvas width="512" height="512" style="max-width: 128px; height: auto;"></canvas>
+                    <p>maskable-icon-512x512.png</p>
+                    <a href="${url}" download="maskable-icon-512x512.png">Download</a>
+                `;
+                const previewCanvas = div.querySelector('canvas');
+                const previewCtx = previewCanvas.getContext('2d');
+                previewCtx.drawImage(canvas, 0, 0);
+                container.appendChild(div);
+            });
+        }
+        
+        // Polyfill for roundRect if not available
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + width - radius, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                this.lineTo(x + width, y + height - radius);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                this.lineTo(x + radius, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+    </script>
+</body>
+</html>
+
