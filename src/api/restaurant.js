@@ -14,11 +14,9 @@ export const fetchRestaurants = (token) => {
     },
   };
   
-  // Add auth token if available and not mock
   if (token && token !== "mock-token") {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  // Fix the double ampersand in URL - use single &
   return api.get("/m/restaurant?city_id=118", config);
 };

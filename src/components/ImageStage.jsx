@@ -15,7 +15,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     onCanvasReady?.(canvas);
   }, [onCanvasReady]);
 
-  // Food images
   const foodImages = [
     "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
     "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
@@ -35,7 +34,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     return foodImages[Math.floor(Math.random() * foodImages.length)];
   };
 
-  // Draw canvas
   const drawCanvas = useCallback(() => {
     const canvas = canvasEl.current;
     if (!canvas) return;
@@ -45,7 +43,6 @@ export default function ImageStage({ image, onCanvasReady }) {
 
     const { width, height } = canvasSizeRef.current;
 
-    // Draw background
     if (backgroundImageRef.current) {
       const img = backgroundImageRef.current;
       const scale = Math.max(width / img.width, height / img.height);
@@ -54,18 +51,15 @@ export default function ImageStage({ image, onCanvasReady }) {
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     }
 
-    // Draw logo
     if (logoImageRef.current && logoPosition.x > 0 && logoPosition.y > 0) {
       const logo = logoImageRef.current;
       const x = logoPosition.x - logoSize / 2;
       const y = logoPosition.y - logoSize / 2;
       
-      // Border
       ctx.strokeStyle = isDragging ? '#FF6D6A' : (isHovering ? 'rgba(255, 109, 106, 0.8)' : 'rgba(255, 109, 106, 0.5)');
       ctx.lineWidth = isDragging ? 4 : 2;
       ctx.strokeRect(x - 15, y - 15, logoSize + 30, logoSize + 30);
       
-      // Corner indicators when dragging
       if (isDragging) {
         ctx.fillStyle = '#FF6D6A';
         const s = 12;
@@ -77,7 +71,6 @@ export default function ImageStage({ image, onCanvasReady }) {
       
       ctx.drawImage(logo, x, y, logoSize, logoSize);
     } else if (logoPosition.x > 0 && logoPosition.y > 0) {
-      // Text placeholder
       ctx.fillStyle = '#FF6D6A';
       ctx.font = 'bold 36px Arial';
       ctx.textAlign = 'center';
@@ -91,7 +84,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     handleCanvasReady(canvas);
   }, [logoPosition, logoSize, isHovering, isDragging, handleCanvasReady]);
 
-  // Load background
   useEffect(() => {
     const img = new Image();
     img.crossOrigin = "anonymous";
@@ -111,7 +103,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     img.src = getImageUrl();
   }, [image, foodImages, drawCanvas]);
 
-  // Load logo
   useEffect(() => {
     const logoSvg = new Image();
     logoSvg.crossOrigin = "anonymous";
@@ -148,7 +139,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     logoSvg.src = "/fastor-logo.svg";
   }, [drawCanvas]);
 
-  // Setup canvas
   useEffect(() => {
     const canvas = canvasEl.current;
     if (!canvas) return;
@@ -174,7 +164,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     return () => window.removeEventListener('resize', updateSize);
   }, [drawCanvas, logoPosition]);
 
-  // Check if point is over logo
   const checkLogoHit = useCallback((x, y) => {
     const logoX = logoPosition.x;
     const logoY = logoPosition.y;
@@ -184,7 +173,6 @@ export default function ImageStage({ image, onCanvasReady }) {
            y >= logoY - half - padding && y <= logoY + half + padding;
   }, [logoPosition, logoSize]);
 
-  // Mouse down
   const handleMouseDown = (e) => {
     e.preventDefault();
     const canvas = canvasEl.current;
@@ -205,7 +193,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     }
   };
 
-  // Mouse move
   const handleMouseMove = (e) => {
     const canvas = canvasEl.current;
     if (!canvas) return;
@@ -234,7 +221,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     }
   };
 
-  // Mouse up
   const handleMouseUp = () => {
     if (isDragging) {
       console.log("Drag ended");
@@ -247,7 +233,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     }
   };
 
-  // Touch handlers
   const handleTouchStart = (e) => {
     e.preventDefault();
     const canvas = canvasEl.current;
@@ -293,7 +278,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     }
   };
 
-  // Wheel for resize
   const handleWheel = (e) => {
     const canvas = canvasEl.current;
     if (!canvas) return;
@@ -314,7 +298,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     }
   };
 
-  // Global listeners for dragging
   useEffect(() => {
     if (isDragging) {
       const handleGlobalMove = (e) => {
@@ -334,7 +317,6 @@ export default function ImageStage({ image, onCanvasReady }) {
     }
   }, [isDragging, isHovering]);
 
-  // Global touch listeners
   useEffect(() => {
     if (isDragging) {
       const handleGlobalTouchMove = (e) => handleTouchMove(e);

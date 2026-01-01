@@ -21,7 +21,6 @@ export default function Home() {
         console.log("Response Data:", res.data);
         console.log("Response Status:", res.status);
         
-        // Check if response exists
         if (!res || !res.data) {
           console.error("No response data received");
           setError("No data received from API");
@@ -29,13 +28,11 @@ export default function Home() {
           return;
         }
 
-        // Helper function to recursively find arrays in object
         const findArrayInObject = (obj, depth = 0) => {
-          if (depth > 3) return null; // Prevent infinite recursion
+          if (depth > 3) return null;
           if (Array.isArray(obj)) return obj;
           if (typeof obj !== 'object' || obj === null) return null;
           
-          // Check common array property names
           const arrayKeys = ['data', 'restaurants', 'items', 'list', 'results', 'result', 'restaurant'];
           for (const key of arrayKeys) {
             if (Array.isArray(obj[key])) {
@@ -47,7 +44,6 @@ export default function Home() {
             }
           }
           
-          // Check all object values
           for (const key in obj) {
             if (Array.isArray(obj[key])) {
               return obj[key];
@@ -61,14 +57,11 @@ export default function Home() {
           return null;
         };
 
-        // Try multiple possible response structures
         let restaurantData = null;
         
-        // First check direct array
         if (Array.isArray(res.data)) {
           restaurantData = res.data;
         } 
-        // Check common nested structures
         else if (Array.isArray(res.data?.data)) {
           restaurantData = res.data.data;
         } 
@@ -87,7 +80,6 @@ export default function Home() {
         else if (Array.isArray(res.data?.result)) {
           restaurantData = res.data.result;
         }
-        // If data.data is an object, check its properties
         else if (res.data?.data && typeof res.data.data === 'object') {
           if (Array.isArray(res.data.data.list)) {
             restaurantData = res.data.data.list;
@@ -98,11 +90,9 @@ export default function Home() {
           } else if (Array.isArray(res.data.data.data)) {
             restaurantData = res.data.data.data;
           } else {
-            // Recursively search for arrays
             restaurantData = findArrayInObject(res.data.data);
           }
         }
-        // Recursively search the entire response object
         else if (typeof res.data === 'object') {
           restaurantData = findArrayInObject(res.data);
         }
@@ -116,7 +106,6 @@ export default function Home() {
           console.error("Full response structure:", JSON.stringify(res.data, null, 2));
           console.error("Response keys:", Object.keys(res.data || {}));
           
-          // Try to show what we actually got
           let responseInfo = `Response is ${typeof res.data}`;
           if (res.data && typeof res.data === 'object') {
             responseInfo += ` with keys: ${Object.keys(res.data).join(', ')}`;
@@ -138,30 +127,22 @@ export default function Home() {
           return;
         }
 
-        // Normalize the data - handle various field name variations
         const normalized = restaurantData.map((item, index) => {
-          // Log first item to see structure
           if (index === 0) {
             console.log("Sample restaurant item structure:", item);
           }
           
-          // Normalize image URL - handle relative and absolute URLs
-          // API uses 'logo' field, but also check other possible field names
           let imageUrl = item.logo || item.restaurant_image || item.image || item.restaurantImage || item.photo || "";
           
-          // Handle "null" string values from API
           if (imageUrl === "null" || imageUrl === null) {
             imageUrl = "";
           }
           
-          // If image URL is relative or doesn't start with http, try to make it absolute
           if (imageUrl && !imageUrl.startsWith("http") && !imageUrl.startsWith("data:") && !imageUrl.startsWith("/")) {
             imageUrl = "/" + imageUrl;
           }
           
-          // If no image, assign a random food image
           if (!imageUrl || imageUrl.trim() === "") {
-            // Array of food images from Unsplash
             const foodImages = [
               "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
               "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
@@ -179,14 +160,11 @@ export default function Home() {
               "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&q=80",
               "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&q=80",
             ];
-            // Use restaurant ID or index to consistently assign the same image to the same restaurant
             const imageIndex = (item.restaurant_id || item.id || index) % foodImages.length;
             imageUrl = foodImages[imageIndex];
           }
           
-          // Handle address_complete field (API uses this)
           let location = item.address_complete || item.location_name || item.location || item.locationName || item.address || "";
-          // Handle "null" string values from API
           if (location === "null" || location === null) {
             location = "";
           }
@@ -197,11 +175,10 @@ export default function Home() {
             image: imageUrl,
             rating: item.rating || item.rating_text || item.ratingText || 0,
             price: item.avg_cost_for_two || item.price || item.avgCostForTwo || item.cost_for_two || 0,
-            location: location, // Normalized location from address_complete
-            address_complete: item.address_complete, // Keep original field for detail page
+            location: location,
+            address_complete: item.address_complete,
             cuisine: item.cuisine || item.cuisine_type || item.cuisineType || "",
             offers: item.offers || item.offers_count || 4,
-            // Pass through original fields for debugging
             restaurant_name: item.restaurant_name,
             restaurant_id: item.restaurant_id,
           };
@@ -218,16 +195,13 @@ export default function Home() {
         let errorMessage = "Failed to load restaurants";
         
         if (err.response) {
-          // Server responded with error
           errorMessage = err.response.data?.message || 
                         err.response.data?.error || 
                         err.response.statusText || 
                         `Server error: ${err.response.status}`;
         } else if (err.request) {
-          // Request made but no response
           errorMessage = "No response from server. Check your internet connection.";
         } else {
-          // Error setting up request
           errorMessage = err.message || "Failed to load restaurants";
         }
         
@@ -271,7 +245,6 @@ export default function Home() {
               onClick={() => {
                 setError(null);
                 setLoading(true);
-                // Reload the page to retry
                 window.location.reload();
               }}
               className="w-full bg-gray-200 text-gray-800 py-3 rounded-lg hover:bg-gray-300 transition-colors"
@@ -290,7 +263,6 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       <StatusBar />
 
-      {/* Header with Location - Light Grey Bar - Sticky with Bulging Effect */}
       <div className="sticky top-0 z-50 px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-2 sm:pb-3">
         <div className="bg-gray-100 rounded-lg p-4 sm:p-5 lg:p-6 shadow-lg transition-all duration-300 hover:shadow-xl" style={{
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05)'
@@ -309,7 +281,6 @@ export default function Home() {
 
       <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-4 sm:pb-6">
 
-        {/* User Greeting Card with Action Icons */}
         <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div className="flex-1 bg-gray-100 rounded-lg p-4 sm:p-5 lg:p-6 shadow-sm hover:shadow-md transition-all duration-300">
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2 text-[#8391A1]">Karan</h2>
@@ -329,7 +300,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Your Taste Section */}
         <div className="mb-6 sm:mb-8 px-0 sm:px-4">
           <div className="flex justify-between items-center mb-3 sm:mb-4">
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">Your taste</h3>
@@ -357,7 +327,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Promotional Banner - Scrollable Carousel */}
         <div className="mb-6 sm:mb-8 relative h-56 sm:h-64 lg:h-72 overflow-visible">
           <div 
             className="flex overflow-x-auto h-full snap-x snap-mandatory scrollbar-hide px-4 sm:px-6"
@@ -369,7 +338,7 @@ export default function Home() {
             }}
             onScroll={(e) => {
               const scrollLeft = e.target.scrollLeft;
-              const itemWidth = e.target.clientWidth - 16; // Account for padding
+              const itemWidth = e.target.clientWidth - 16;
               const index = Math.round(scrollLeft / itemWidth);
               setBannerScrollIndex(Math.min(Math.max(index, 0), 3));
             }}
@@ -410,7 +379,6 @@ export default function Home() {
                   scrollSnapStop: 'always'
                 }}
               >
-                {/* Background Image */}
                 <img
                   src={banner.image}
                   alt={banner.title}
@@ -423,7 +391,6 @@ export default function Home() {
                     e.target.style.display = 'none';
                   }}
                 />
-                {/* Dark overlay for better text readability */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/20"></div>
                 <div className="absolute inset-0 flex items-center px-4 sm:px-6 lg:px-8 z-10">
                   <div className="text-white">
@@ -436,7 +403,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-          {/* Carousel dots - Centered at bottom */}
           <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1.5 z-20 pointer-events-none">
             {[1, 2, 3, 4].map((i) => (
               <div
@@ -449,7 +415,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Popular Ones Section */}
         <div className="mb-4 sm:mb-6 px-0 sm:px-4">
           <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Popular Ones</h3>
           {restaurants.length === 0 && !loading && (
@@ -474,7 +439,6 @@ export default function Home() {
               loading="lazy"
                         onError={(e) => {
                           e.target.onerror = null;
-                          // Fallback to a random food image if the image fails to load
                           const foodImages = [
                             "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
                             "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
@@ -534,7 +498,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Logout Button */}
         <div className="mt-6 sm:mt-8 text-center pb-4 sm:pb-6 px-4">
           <button
             onClick={logout}

@@ -31,7 +31,6 @@ export default function Login() {
       <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         <div className="max-w-sm sm:max-w-md lg:max-w-lg mx-auto">
 
-        {/* Main Content */}
         <h1 className="mb-2 sm:mb-3 font-bold text-2xl sm:text-3xl lg:text-4xl leading-[130%] tracking-[-0.01em] text-[#1E232C]">
           Enter Your Mobile Number
         </h1>

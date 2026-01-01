@@ -17,12 +17,11 @@ export default function Otp() {
   }
 
   const handleOtpChange = (index, value) => {
-    if (value.length > 1) return; // Only allow single digit
+    if (value.length > 1) return;
     const newOtp = [...otp];
     newOtp[index] = value.replace(/\D/g, "");
     setOtp(newOtp);
 
-    // Auto-focus next input
     if (value && index < 5) {
       const nextInput = document.getElementById(`otp-${index + 1}`);
       if (nextInput) nextInput.focus();
@@ -44,28 +43,23 @@ export default function Otp() {
       if (i < 6) newOtp[i] = char;
     });
     setOtp(newOtp);
-    // Focus last filled input
     const lastIndex = Math.min(pastedData.length - 1, 5);
     const lastInput = document.getElementById(`otp-${lastIndex}`);
     if (lastInput) lastInput.focus();
   };
 
   const otpString = otp.join("");
-  // Accept 6-digit OTP or hardcoded 123456
   const isValidOtp = otpString.length === 6 || otpString === "123456";
 
   const handleVerify = async () => {
     try {
       setLoading(true);
-      // For hardcoded OTP 123456, still try to get real token from API
-      // If API fails, use mock token as fallback
       let token = "mock-token";
       
       try {
         const res = await loginUser(mobile, otpString);
         console.log("Login API Response:", res.data);
         
-        // Extract token from response - token is at res.data.data.token
         token = res.data?.data?.token || res.data?.token || token;
         
         if (token && token !== "mock-token") {
@@ -76,7 +70,6 @@ export default function Otp() {
       } catch (apiError) {
         console.error("API login failed:", apiError);
         console.error("Error response:", apiError.response?.data);
-        // If hardcoded OTP, allow proceeding with mock token
         if (otpString !== "123456") {
           throw apiError;
         }
@@ -112,7 +105,6 @@ export default function Otp() {
       <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         <div className="max-w-sm sm:max-w-md lg:max-w-lg mx-auto">
 
-        {/* Back Button - 44x44px minimum touch target */}
         <button
           onClick={() => navigate("/login")}
           className="mb-6 sm:mb-8 text-gray-600 hover:text-black transition-all duration-200 hover:scale-110 active:scale-95 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center"
@@ -133,7 +125,6 @@ export default function Otp() {
           </svg>
         </button>
 
-        {/* Main Content */}
         <h1 className="mb-2 sm:mb-3 font-bold text-2xl sm:text-3xl lg:text-4xl text-[#1E232C] leading-[130%] tracking-[-0.01em]">
           OTP Verification
         </h1>
@@ -141,7 +132,6 @@ export default function Otp() {
           Enter the verification code we just sent on your Mobile Number.
         </p>
 
-        {/* OTP Input Boxes - Responsive sizing with 44x44px minimum */}
         <div className="flex gap-2 sm:gap-3 lg:gap-4 mb-6 sm:mb-8 justify-center">
           {otp.map((digit, index) => (
             <input
@@ -160,7 +150,6 @@ export default function Otp() {
           ))}
         </div>
 
-        {/* Verify Button - 44px minimum height */}
         <button
           disabled={!isValidOtp || loading}
           onClick={handleVerify}
@@ -169,7 +158,6 @@ export default function Otp() {
           {loading ? "Verifying..." : "Verify"}
         </button>
 
-        {/* Resend Link - 44px minimum touch target */}
         <p className="text-center text-sm sm:text-base text-[#1E232C]">
           Didn't received code?{" "}
           <button

@@ -13,7 +13,6 @@ export default function RestaurantDetail() {
     return null;
   }
 
-  // Get the address - prioritize location field from normalized data
   const getAddress = () => {
     if (state.location && state.location !== "null" && String(state.location).trim() !== "") {
       return String(state.location).trim();
@@ -38,17 +37,14 @@ export default function RestaurantDetail() {
     }
 
     try {
-      // Wait a bit to ensure canvas is fully rendered
       await new Promise(resolve => setTimeout(resolve, 200));
 
-      // Native canvas toDataURL - this captures the entire canvas
       const dataURL = canvas.toDataURL("image/png", 1.0);
 
       if (!dataURL || dataURL === "data:,") {
         throw new Error("Failed to generate image data");
       }
 
-      // Convert data URL to blob
       const response = await fetch(dataURL);
       if (!response.ok) {
         throw new Error("Failed to convert image to blob");
@@ -59,7 +55,6 @@ export default function RestaurantDetail() {
         type: "image/png",
       });
 
-      // Use Web Share API if available (PWA feature)
       if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
@@ -69,14 +64,12 @@ export default function RestaurantDetail() {
           });
           console.log("Image shared successfully via Web Share API");
         } catch (shareError) {
-          // User cancelled or share failed, fall through to download
           if (shareError.name !== "AbortError") {
             console.error("Share error:", shareError);
             throw shareError;
           }
         }
       } else {
-        // Fallback: Download the image
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
@@ -98,9 +91,7 @@ export default function RestaurantDetail() {
       <div className="bg-white mx-auto w-full max-w-full sm:max-w-2xl lg:max-w-4xl xl:max-w-6xl min-h-screen">
         <StatusBar />
         
-        {/* Image Section */}
         <div className="relative w-full" style={{ height: "50vh", minHeight: "300px", maxHeight: "600px" }}>
-          {/* Back Button - 44x44px minimum */}
           <button
             onClick={() => navigate("/home")}
             className="absolute top-4 sm:top-6 left-4 sm:left-6 z-20 bg-black/50 hover:bg-black/70 text-white rounded-full w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg hover:shadow-xl min-w-[44px] min-h-[44px]"
@@ -121,7 +112,6 @@ export default function RestaurantDetail() {
             </svg>
           </button>
 
-          {/* Image Stage - This should display the image */}
           <ImageStage
             image={state.image}
             onCanvasReady={(c) => {
@@ -131,13 +121,11 @@ export default function RestaurantDetail() {
           />
         </div>
 
-        {/* Restaurant Information */}
         <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 lg:mb-4">
             {state.name || state.restaurant_name || "Restaurant"}
           </h1>
 
-          {/* Location and Rating */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-3 sm:mb-4">
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 flex items-center gap-1 sm:gap-2">
               <svg className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,7 +152,6 @@ export default function RestaurantDetail() {
             </div>
           </div>
 
-          {/* Offers */}
           <div className="flex items-center gap-1.5 sm:gap-2 mb-4 sm:mb-6">
             <svg
               className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 flex-shrink-0"
@@ -184,13 +171,11 @@ export default function RestaurantDetail() {
             </span>
           </div>
 
-          {/* Description */}
           <p className="text-sm sm:text-base lg:text-lg text-gray-700 leading-relaxed mb-6 sm:mb-8">
             {state.description ||
               "Our delicate vanilla cake swirled with chocolate and filled with mocha chocolate chip cream and a layer of dark chocolate ganache"}
           </p>
 
-          {/* Share Button - 44px minimum height */}
           <button
             onClick={handleShare}
             className="w-full bg-[#FF6D6A] text-white py-4 sm:py-5 lg:py-6 rounded-lg font-medium hover:bg-[#FF5A57] hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ease-out shadow-lg mb-4 sm:mb-6 text-base sm:text-lg lg:text-xl min-h-[48px] sm:min-h-[52px] lg:min-h-[56px]"
@@ -198,7 +183,6 @@ export default function RestaurantDetail() {
             📤 Share Image
           </button>
 
-          {/* Hints */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 lg:p-5 mb-4">
             <p className="text-xs sm:text-sm text-blue-800 font-medium text-center mb-1 sm:mb-2">
               🎯 Bonus Feature: Reposition the Logo

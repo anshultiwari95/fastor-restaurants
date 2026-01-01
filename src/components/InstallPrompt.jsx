@@ -5,18 +5,15 @@ export default function InstallPrompt() {
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   useEffect(() => {
-    // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches) {
       return;
     }
 
-    // Check if already shown in this session
     const hasSeenPrompt = sessionStorage.getItem('pwa-install-prompt-shown');
     if (hasSeenPrompt) {
       return;
     }
 
-    // Listen for the beforeinstallprompt event
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
@@ -35,10 +32,8 @@ export default function InstallPrompt() {
       return;
     }
 
-    // Show the install prompt
     deferredPrompt.prompt();
 
-    // Wait for the user to respond
     const { outcome } = await deferredPrompt.userChoice;
 
     if (outcome === 'accepted') {
@@ -47,7 +42,6 @@ export default function InstallPrompt() {
       console.log('User dismissed the install prompt');
     }
 
-    // Clear the deferred prompt
     setDeferredPrompt(null);
     setShowInstallPrompt(false);
     sessionStorage.setItem('pwa-install-prompt-shown', 'true');
